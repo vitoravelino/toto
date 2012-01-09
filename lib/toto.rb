@@ -161,7 +161,11 @@ module Toto
       end
 
       def title
-        @config[:title]
+        if @path == "archives"
+					"arquivo"
+				else
+					@config[:title]
+				end
       end
 
       def render page, type
