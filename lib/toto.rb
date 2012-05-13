@@ -304,7 +304,11 @@ module Toto
         ERB.new(File.read("#{path}/#{page}.rhtml")).result(ctx)
       },
       :error => lambda {|code|                              # The HTML for your error page
-        "<font style='font-size:300%'>toto, we're not in Kansas anymore (#{code})</font>"
+        if code == 404
+          File.read("blog/templates/pages/404.rhtml")
+        else
+          "<font style='font-size:300%'>toto, we're not in Kansas anymore (#{code})</font>"
+        end
       }
     }
     def initialize obj
