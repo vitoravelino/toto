@@ -307,7 +307,7 @@ module Toto
         if code == 404
           File.read("blog/templates/pages/404.rhtml")
         else
-          "<font style='font-size:300%'>toto, we're not in Kansas anymore (#{code})</font>"
+          File.read("blog/templates/pages/error.rhtml")
         end
       }
     }
