@@ -33,7 +33,28 @@ module Toto
     ENV['RACK_ENV'] = env
   end
 
+
+  module I18n
+    require 'r18n-core'
+
+    module Helper
+      def self.prepare(params)
+          ::R18n.clear_cache! if ::Toto.env == 'development'
+
+          ::R18n.set do
+            locales = ::R18n::I18n.parse_http(params['HTTP_ACCEPT_LANGUAGE'])
+            locales.insert(0, params['locale']) if params['locale']
+
+            ::R18n::I18n.new(locales, ::R18n.default_places,
+              :off_filters => :untranslated, :on_filters => :untranslated_html)
+          end
+      end
+    end
+  end
+
   module Template
+    include R18n::Helpers
+
     def to_html page, config, &blk
       path = ([:layout, :repo].include?(page) ? Paths[:templates] : Paths[:pages])
       config[:to_html].call(path, page, binding)
@@ -150,6 +171,9 @@ module Toto
       attr_reader :env
 
       def initialize ctx = {}, config = {}, path = "/", env = {}
+        params = Rack::Utils.parse_nested_query(env['QUERY_STRING'])
+        Toto::I18n::Helper.prepare(params)
+
         @config, @context, @path, @env = config, ctx, path, env
         @articles = Site.articles(@config[:ext]).reverse.map do |a|
           Article.new(a, @config)
@@ -361,6 +385,7 @@ module Toto
       @response.status = response[:status]
       @response.finish
     end
+
   end
 end
 

@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{toto}
-  s.version = "0.4.9.1"
+  s.version = "0.4.10"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["cloudhead"]
@@ -64,17 +64,20 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<builder>, [">= 0"])
       s.add_runtime_dependency(%q<rack>, [">= 0"])
       s.add_runtime_dependency(%q<rdiscount>, [">= 0"])
+      s.add_dependency(%q<r18n-core>, [">= 0"])
     else
       s.add_dependency(%q<riot>, [">= 0"])
       s.add_dependency(%q<builder>, [">= 0"])
       s.add_dependency(%q<rack>, [">= 0"])
       s.add_dependency(%q<rdiscount>, [">= 0"])
+      s.add_dependency(%q<r18n-core>, [">= 0"])
     end
   else
     s.add_dependency(%q<riot>, [">= 0"])
     s.add_dependency(%q<builder>, [">= 0"])
     s.add_dependency(%q<rack>, [">= 0"])
     s.add_dependency(%q<rdiscount>, [">= 0"])
+    s.add_dependency(%q<r18n-core>, [">= 0"])
   end
 end
 
